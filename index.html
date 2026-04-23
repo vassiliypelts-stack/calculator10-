@@ -1,145 +1,388 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Финансовый калькулятор PRO</title>
-    <!-- Подключаем профессиональные шрифты и Tailwind -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Калькулятор недвижимости — Кооператив vs Банк</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --emerald: #059669;
+    --emerald-light: #d1fae5;
+    --emerald-border: #6ee7b7;
+    --emerald-dark: #065f46;
+    --rose: #e11d48;
+    --rose-light: #ffe4e6;
+    --rose-border: #fda4af;
+    --rose-dark: #9f1239;
+    --bg: #f8fafc;
+    --surface: #ffffff;
+    --border: #e2e8f0;
+    --text: #0f172a;
+    --muted: #64748b;
+    --radius: 20px;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 2rem 1rem;
+  }
+
+  .container { max-width: 720px; margin: 0 auto; }
+
+  .header { text-align: center; margin-bottom: 2rem; }
+  .header h1 { font-size: 28px; font-weight: 600; margin-bottom: 0.5rem; }
+  .header p { font-size: 15px; color: var(--muted); }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  }
+
+  .section-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+    color: var(--text);
+  }
+
+  .input-group { margin-bottom: 1.25rem; }
+  .input-group:last-child { margin-bottom: 0; }
+
+  .input-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+  .input-val { font-weight: 600; color: var(--text); }
+
+  input[type=range] {
+    width: 100%;
+    -webkit-appearance: none;
+    height: 6px;
+    border-radius: 3px;
+    background: #e2e8f0;
+    outline: none;
+    cursor: pointer;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--text);
+    cursor: pointer;
+    border: 3px solid white;
+    box-shadow: 0 0 0 1px var(--border);
+  }
+
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  .num-input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    background: var(--surface);
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .num-input:focus { border-color: #94a3b8; }
+
+  .entry-big { font-size: 38px; font-weight: 600; margin: 0.5rem 0; }
+  .entry-desc { font-size: 13px; color: var(--muted); margin-bottom: 1rem; }
+
+  .breakdown-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+  .breakdown-row:last-child { border-bottom: none; }
+  .breakdown-label { color: var(--muted); }
+  .breakdown-val { font-weight: 500; }
+
+  .pay-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+
+  .pay-card {
+    border-radius: 14px;
+    padding: 1.25rem;
+    border: 1px solid transparent;
+  }
+  .pay-emerald { background: var(--emerald-light); border-color: var(--emerald-border); }
+  .pay-rose { background: var(--rose-light); border-color: var(--rose-border); }
+
+  .pay-title { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+  .pay-emerald .pay-title { color: var(--emerald-dark); }
+  .pay-rose .pay-title { color: var(--rose-dark); }
+
+  .pay-amount { font-size: 28px; font-weight: 600; }
+  .pay-emerald .pay-amount { color: var(--emerald-dark); }
+  .pay-rose .pay-amount { color: var(--rose-dark); }
+
+  .pay-sub { font-size: 12px; margin-top: 0.25rem; }
+  .pay-emerald .pay-sub { color: var(--emerald); }
+  .pay-rose .pay-sub { color: var(--rose); }
+
+  .savings-band {
+    background: #ecfdf5;
+    border: 1px solid var(--emerald-border);
+    border-radius: 12px;
+    padding: 0.875rem 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .savings-label { font-size: 14px; color: var(--emerald-dark); font-weight: 500; }
+  .savings-val { font-size: 20px; font-weight: 600; color: var(--emerald-dark); }
+
+  .benefit-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+  .benefit-row:last-child { border-bottom: none; }
+  .benefit-label { color: var(--muted); }
+  .benefit-value { font-weight: 500; }
+  .benefit-positive { color: var(--emerald); font-size: 18px; font-weight: 600; }
+
+  .total-highlight {
+    background: #f0fdf4;
+    border: 1px solid var(--emerald-border);
+    border-radius: 12px;
+    padding: 0.875rem 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.75rem;
+  }
+  .total-highlight .benefit-label { color: var(--text); font-weight: 500; }
+
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+  .info-row:last-child { border-bottom: none; }
+  .info-name { font-weight: 500; }
+  .info-desc { color: var(--muted); text-align: right; font-size: 13px; }
+
+  .share-btn {
+    width: 100%;
+    padding: 15px;
+    border-radius: 14px;
+    background: var(--text);
+    color: white;
+    border: none;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 1rem;
+    transition: opacity 0.2s;
+  }
+  .share-btn:hover { opacity: 0.88; }
+  .share-btn:active { opacity: 0.75; transform: scale(0.99); }
+
+  .toast {
+    text-align: center;
+    font-size: 13px;
+    color: var(--emerald);
+    margin-top: 0.5rem;
+    height: 20px;
+    transition: opacity 0.3s;
+  }
+
+  @media (max-width: 500px) {
+    .row { grid-template-columns: 1fr; }
+    .pay-grid { grid-template-columns: 1fr; }
+    .entry-big { font-size: 28px; }
+    .pay-amount { font-size: 22px; }
+    .header h1 { font-size: 22px; }
+  }
+</style>
 </head>
-<body class="bg-slate-50 text-slate-900 antialiased pb-24">
-    <!-- Верхний баннер -->
-    <div class="bg-blue-600 text-white py-3 text-center text-[10px] font-black uppercase tracking-[0.2em] shadow-lg">
-        СРАВНИТЕ ИПОТЕКУ И АЛЬТЕРНАТИВНОЕ ФИНАНСИРОВАНИЕ
+<body>
+<div class="container">
+  <div class="header">
+    <h1>Калькулятор недвижимости</h1>
+    <p>Кооператив (Фонд) vs Банковская ипотека — сравните реальную выгоду</p>
+  </div>
+
+  <div class="card">
+    <div class="section-title">Параметры сделки</div>
+    <div class="input-group">
+      <div class="input-label">Стоимость объекта <span class="input-val" id="price-out">5 000 000 ₽</span></div>
+      <input type="range" id="price" min="1500000" max="50000000" step="100000" value="5000000">
     </div>
-
-    <div class="max-w-6xl mx-auto px-6 mt-12">
-        <header class="mb-14 flex flex-col items-center">
-            <div class="bg-white p-4 rounded-3xl shadow-sm mb-4 border border-slate-100">
-                <i data-lucide="calculator" class="text-blue-600 w-10 h-10"></i>
-            </div>
-            <h1 class="text-3xl md:text-5xl font-black text-center text-slate-900 tracking-tighter leading-tight">
-                Калькулятор выбора <br/> <span class="text-blue-600">выгодного займа</span>
-            </h1>
-        </header>
-
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-            <!-- ПАНЕЛЬ ВВОДА -->
-            <div class="lg:col-span-4 bg-white rounded-[2.5rem] p-10 shadow-2xl shadow-slate-200/50 border border-slate-100 flex flex-col gap-10">
-                <h2 class="text-xl font-bold flex items-center gap-3 text-slate-800">
-                    <span class="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xs">1</span>
-                    Ваши данные
-                </h2>
-                
-                <div class="space-y-10">
-                    <!-- Цена квартиры -->
-                    <div class="space-y-4">
-                        <div class="flex justify-between items-end">
-                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Цена квартиры</label>
-                            <span id="priceVal" class="text-2xl font-black text-blue-600">0 ₽</span>
-                        </div>
-                        <input type="range" id="price" min="1000000" max="50000000" step="100000" value="10000000" class="custom-range">
-                    </div>
-
-                    <!-- Взнос -->
-                    <div class="space-y-4">
-                        <div class="flex justify-between items-end">
-                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Первоначальный взнос</label>
-                            <span id="dpPercentVal" class="text-2xl font-black text-blue-600">30%</span>
-                        </div>
-                        <div id="dpRubVal" class="text-xs font-bold text-slate-400">0 ₽</div>
-                        <input type="range" id="dp" min="10" max="90" step="5" value="30" class="custom-range">
-                    </div>
-
-                    <!-- Срок и Ставка -->
-                    <div class="grid grid-cols-2 gap-6">
-                        <div class="space-y-4">
-                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Срок (лет)</label>
-                            <div class="relative">
-                                <input type="number" id="years" value="25" class="w-full bg-slate-50 border-none rounded-2xl py-3 px-4 font-bold text-slate-800 focus:ring-2 focus:ring-blue-500 outline-none">
-                            </div>
-                        </div>
-                        <div class="space-y-4">
-                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Ставка банка</label>
-                            <div class="relative">
-                                <input type="number" id="bankRate" value="20" class="w-full bg-slate-50 border-none rounded-2xl py-3 px-4 font-bold text-rose-500 focus:ring-2 focus:ring-rose-500 outline-none">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ПАНЕЛЬ РЕЗУЛЬТАТОВ -->
-            <div class="lg:col-span-8 flex flex-col gap-8">
-                
-                <!-- КАРТОЧКА ВХОДА -->
-                <div class="bg-white rounded-[2.5rem] p-10 shadow-sm border border-slate-100 overflow-hidden relative group">
-                    <div class="absolute -top-10 -right-10 opacity-[0.03] group-hover:rotate-12 transition-transform duration-700">
-                        <i data-lucide="home" style="width: 250px; height: 250px;"></i>
-                    </div>
-                    <h2 class="text-xl font-bold flex items-center gap-3 mb-8">
-                        <span class="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xs">2</span>
-                        Ваш вход в сделку
-                    </h2>
-                    <div class="bg-emerald-50 rounded-[2rem] p-10 border border-emerald-100 flex flex-col md:flex-row justify-between items-center gap-8 relative z-10">
-                        <div class="text-center md:text-left">
-                            <p class="text-[10px] font-black text-emerald-600 uppercase tracking-widest mb-1">ИТОГО ВХОД</p>
-                            <p id="totalEntry" class="text-5xl md:text-6xl font-black text-emerald-700 tracking-tighter">0 ₽</p>
-                        </div>
-                        <p class="text-sm font-semibold text-emerald-600/80 max-w-[220px] text-center md:text-right italic leading-relaxed">
-                            “Вы заходите в сделку с этой суммой и оформляете квартиру на себя”
-                        </p>
-                    </div>
-                </div>
-
-                <!-- СРАВНЕНИЕ КАРТЫ -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- ФОНД -->
-                    <div class="bg-white rounded-[2.5rem] p-8 shadow-sm border border-slate-100 relative group transition-all hover:shadow-xl hover:shadow-emerald-900/5">
-                        <h3 class="text-xs font-black text-slate-400 uppercase mb-8 flex items-center gap-2">
-                             Ежемесячный платеж
-                        </h3>
-                        <div class="space-y-6">
-                            <div class="flex justify-between items-end">
-                                <span class="text-emerald-600 font-extrabold text-sm uppercase">Фонд (10% + взнос)</span>
-                                <span id="fundMonthly" class="text-3xl font-black text-emerald-600">0 ₽</span>
-                            </div>
-                            <div class="flex justify-between items-end opacity-40">
-                                <span class="text-slate-400 font-extrabold text-sm uppercase">Банк</span>
-                                <span id="bankMonthlySmall" class="text-2xl font-black text-slate-800">0 ₽</span>
-                            </div>
-                        </div>
-                        <div class="mt-8 pt-8 border-t border-slate-50">
-                            <div class="inline-flex items-center gap-2 bg-emerald-50 text-emerald-700 px-4 py-2 rounded-xl text-xs font-black">
-                                <i data-lucide="trending-down" class="w-4 h-4"></i>
-                                Экономия: <span id="monthlySave">0 ₽</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- ПЕРЕПЛАТА -->
-                    <div class="bg-white rounded-[2.5rem] p-8 shadow-sm border border-slate-100 flex flex-col justify-between">
-                        <h3 class="text-xs font-black text-slate-400 uppercase mb-8">Выгода за весь срок</h3>
-                        <div class="space-y-4">
-                            <div id="totalSave" class="text-4xl font-black text-emerald-600 tracking-tighter">0 ₽</div>
-                            <p class="text-xs font-bold text-slate-400 uppercase">Суммарная экономия</p>
-                        </div>
-                        <div class="mt-8 pt-8 border-t border-slate-50 italic text-[10px] text-slate-400">
-                             * Расчет включает членские взносы 12 000 ₽ / год
-                        </div>
-                    </div>
-                </div>
-
-                <button id="mainBtn" onclick="copyResults()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-black py-8 rounded-[2.5rem] shadow-2xl shadow-blue-500/30 transition-all active:scale-[0.98] flex items-center justify-center gap-4 text-xl uppercase tracking-widest leading-none">
-                    <span>Отправить расчет клиенту</span>
-                    <i data-lucide="share-2" class="w-7 h-7"></i>
-                </button>
-            </div>
-        </div>
+    <div class="input-group">
+      <div class="input-label">Первоначальный взнос <span class="input-val" id="dp-out">30%</span></div>
+      <input type="range" id="dp" min="10" max="90" step="1" value="30">
     </div>
+    <div class="row">
+      <div class="input-group" style="margin-bottom:0">
+        <div class="input-label">Срок займа (лет)</div>
+        <input type="number" class="num-input" id="term" value="15" min="1" max="30">
+      </div>
+      <div class="input-group" style="margin-bottom:0">
+        <div class="input-label">Ставка банка (%)</div>
+        <input type="number" class="num-input" id="bank-rate" value="18" min="1" max="40" step="0.1">
+      </div>
+    </div>
+  </div>
 
-    <script src="script.js"></script>
+  <div class="card">
+    <div class="section-title">Ваш вход в сделку</div>
+    <div class="entry-big" id="entry-total">—</div>
+    <div class="entry-desc">Вы оформляете квартиру на себя с этой суммой</div>
+    <div class="breakdown-row"><span class="breakdown-label">Первоначальный взнос</span><span class="breakdown-val" id="e-dp">—</span></div>
+    <div class="breakdown-row"><span class="breakdown-label">Комиссия 13% от цены объекта</span><span class="breakdown-val" id="e-comm">—</span></div>
+    <div class="breakdown-row"><span class="breakdown-label">Вступительный взнос</span><span class="breakdown-val">150 000 ₽</span></div>
+    <div class="breakdown-row"><span class="breakdown-label">Юридические сборы</span><span class="breakdown-val">23 100 ₽</span></div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">Сравнение ежемесячных платежей</div>
+    <div class="pay-grid">
+      <div class="pay-card pay-emerald">
+        <div class="pay-title">Кооператив (Фонд)</div>
+        <div class="pay-amount" id="fund-pay">—</div>
+        <div class="pay-sub">10% годовых + 1 000 ₽/мес</div>
+      </div>
+      <div class="pay-card pay-rose">
+        <div class="pay-title">Банк</div>
+        <div class="pay-amount" id="bank-pay">—</div>
+        <div class="pay-sub" id="bank-rate-label">18% годовых</div>
+      </div>
+    </div>
+    <div class="savings-band">
+      <div class="savings-label">Ежемесячная экономия</div>
+      <div class="savings-val" id="monthly-saving">—</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">Итоговая выгода за весь срок</div>
+    <div class="benefit-row"><span class="benefit-label">Всего выплат (Фонд)</span><span class="benefit-value" id="total-fund">—</span></div>
+    <div class="benefit-row"><span class="benefit-label">Всего выплат (Банк)</span><span class="benefit-value" id="total-bank">—</span></div>
+    <div class="benefit-row"><span class="benefit-label">Переплата Фонд</span><span class="benefit-value" id="overpay-fund">—</span></div>
+    <div class="benefit-row"><span class="benefit-label">Переплата Банк</span><span class="benefit-value" id="overpay-bank">—</span></div>
+    <div class="total-highlight">
+      <span class="benefit-label">Экономия за весь срок</span>
+      <span class="benefit-positive" id="total-saving">—</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">Важно понимать</div>
+    <div class="info-row"><span class="info-name">Комиссия 13%</span><span class="info-desc">От полной цены объекта, разово</span></div>
+    <div class="info-row"><span class="info-name">Вступительный взнос</span><span class="info-desc">150 000 ₽, разово</span></div>
+    <div class="info-row"><span class="info-name">Юридические сборы</span><span class="info-desc">23 100 ₽, разово</span></div>
+    <div class="info-row"><span class="info-name">Членский взнос</span><span class="info-desc">12 000 ₽/год → 1 000 ₽/мес к платежу</span></div>
+    <div class="info-row"><span class="info-name">Ставка Фонда</span><span class="info-desc">10% годовых (аннуитет)</span></div>
+  </div>
+
+  <button class="share-btn" onclick="share()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+    Поделиться расчётом
+  </button>
+  <div class="toast" id="toast"></div>
+</div>
+
+<script>
+function fmt(n) { return Math.round(n).toLocaleString('ru-RU') + ' ₽'; }
+
+function annuity(loan, rateY, years) {
+  const r = rateY / 100 / 12;
+  const n = years * 12;
+  if (r === 0) return loan / n;
+  return loan * r * Math.pow(1+r,n) / (Math.pow(1+r,n)-1);
+}
+
+function calc() {
+  const price = +document.getElementById('price').value;
+  const dpPct = +document.getElementById('dp').value;
+  const term  = +document.getElementById('term').value || 15;
+  const bankRate = +document.getElementById('bank-rate').value || 18;
+
+  const dp = Math.round(price * dpPct / 100);
+  const loan = price - dp;
+  const commission = Math.round(price * 0.13);
+  const entry = 150000;
+  const legal = 23100;
+  const entryTotal = dp + commission + entry + legal;
+
+  document.getElementById('price-out').textContent = fmt(price);
+  document.getElementById('dp-out').textContent = dpPct + '%';
+  document.getElementById('entry-total').textContent = fmt(entryTotal);
+  document.getElementById('e-dp').textContent = fmt(dp);
+  document.getElementById('e-comm').textContent = fmt(commission);
+
+  const fundMonthly = Math.round(annuity(loan, 10, term) + 1000);
+  const bankMonthly = Math.round(annuity(loan, bankRate, term));
+
+  document.getElementById('fund-pay').textContent = fmt(fundMonthly);
+  document.getElementById('bank-pay').textContent = fmt(bankMonthly);
+  document.getElementById('bank-rate-label').textContent = bankRate + '% годовых';
+  document.getElementById('monthly-saving').textContent = fmt(Math.max(0, bankMonthly - fundMonthly));
+
+  const n = term * 12;
+  const totalFund = Math.round(fundMonthly * n + commission + entry + legal);
+  const totalBank = Math.round(bankMonthly * n);
+  const overpayFund = Math.round(fundMonthly * n - loan + commission + entry + legal);
+  const overpayBank = Math.round(bankMonthly * n - loan);
+  const totalSaving = totalBank - totalFund;
+
+  document.getElementById('total-fund').textContent = fmt(totalFund);
+  document.getElementById('total-bank').textContent = fmt(totalBank);
+  document.getElementById('overpay-fund').textContent = fmt(overpayFund);
+  document.getElementById('overpay-bank').textContent = fmt(overpayBank);
+  document.getElementById('total-saving').textContent = (totalSaving > 0 ? '+' : '') + fmt(totalSaving);
+
+  window._d = { price, dpPct, dp, loan, term, bankRate, commission, entry, legal, entryTotal, fundMonthly, bankMonthly, totalFund, totalBank, totalSaving };
+}
+
+function share() {
+  const d = window._d; if (!d) return;
+  const r = n => Math.round(n).toLocaleString('ru-RU');
+  const text = `🏠 Расчёт покупки недвижимости\n\nЦена: ${r(d.price)} ₽\nПВ (${d.dpPct}%): ${r(d.dp)} ₽\nСрок: ${d.term} лет\n\n💼 Вход в сделку: ${r(d.entryTotal)} ₽\n\n📊 Ежемесячно:\nКооператив: ${r(d.fundMonthly)} ₽\nБанк (${d.bankRate}%): ${r(d.bankMonthly)} ₽\nЭкономия: ${r(d.bankMonthly - d.fundMonthly)} ₽/мес\n\n💰 За весь срок:\nФонд: ${r(d.totalFund)} ₽\nБанк: ${r(d.totalBank)} ₽\nВыгода: ${r(d.totalSaving)} ₽`;
+  navigator.clipboard.writeText(text).then(() => {
+    const t = document.getElementById('toast');
+    t.textContent = 'Скопировано в буфер обмена';
+    setTimeout(() => t.textContent = '', 3000);
+  });
+}
+
+['price','dp'].forEach(id => document.getElementById(id).addEventListener('input', calc));
+['term','bank-rate'].forEach(id => document.getElementById(id).addEventListener('input', calc));
+calc();
+</script>
 </body>
 </html>
