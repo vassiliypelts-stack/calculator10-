@@ -8,13 +8,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --emerald: #059669;
     --emerald-light: #d1fae5;
     --emerald-border: #6ee7b7;
     --emerald-dark: #065f46;
-    --rose: #e11d48;
+    --emerald: #059669;
     --rose-light: #ffe4e6;
     --rose-border: #fda4af;
     --rose-dark: #9f1239;
@@ -25,207 +23,66 @@
     --muted: #64748b;
     --radius: 20px;
   }
-
-  body {
-    font-family: 'Inter', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    padding: 2rem 1rem;
-  }
-
+  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding: 2rem 1rem; }
   .container { max-width: 720px; margin: 0 auto; }
-
   .header { text-align: center; margin-bottom: 2rem; }
-  .header h1 { font-size: 28px; font-weight: 600; margin-bottom: 0.5rem; }
-  .header p { font-size: 15px; color: var(--muted); }
-
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 1.5rem;
-    margin-bottom: 1rem;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-  }
-
-  .section-title {
-    font-size: 15px;
-    font-weight: 600;
-    margin-bottom: 1.25rem;
-    color: var(--text);
-  }
-
-  .input-group { margin-bottom: 1.25rem; }
-  .input-group:last-child { margin-bottom: 0; }
-
-  .input-label {
-    display: flex;
-    justify-content: space-between;
-    font-size: 13px;
-    color: var(--muted);
-    margin-bottom: 0.5rem;
-  }
-  .input-val { font-weight: 600; color: var(--text); }
-
-  input[type=range] {
-    width: 100%;
-    -webkit-appearance: none;
-    height: 6px;
-    border-radius: 3px;
-    background: #e2e8f0;
-    outline: none;
-    cursor: pointer;
-  }
-  input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: var(--text);
-    cursor: pointer;
-    border: 3px solid white;
-    box-shadow: 0 0 0 1px var(--border);
-  }
-
-  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-
+  .header h1 { font-size: 26px; font-weight: 600; margin-bottom: 0.4rem; }
+  .header p { font-size: 14px; color: var(--muted); }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1rem; box-shadow: 0 1px 4px rgba(0,0,0,0.04); }
+  .section-title { font-size: 15px; font-weight: 600; margin-bottom: 1.25rem; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .input-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .input-label { font-size: 12px; color: var(--muted); font-weight: 500; }
   .num-input {
-    width: 100%;
-    padding: 10px 14px;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    font-size: 15px;
-    font-family: 'Inter', sans-serif;
-    background: var(--surface);
-    color: var(--text);
-    outline: none;
-    transition: border-color 0.2s;
+    width: 100%; padding: 12px 14px;
+    border: 1.5px solid var(--border); border-radius: 10px;
+    font-size: 16px; font-family: 'Inter', sans-serif; font-weight: 500;
+    background: var(--surface); color: var(--text);
+    outline: none; transition: border-color 0.2s;
   }
   .num-input:focus { border-color: #94a3b8; }
-
-  .entry-big { font-size: 38px; font-weight: 600; margin: 0.5rem 0; }
+  .input-hint { font-size: 11px; color: var(--muted); }
+  .entry-big { font-size: 36px; font-weight: 600; margin: 0.5rem 0 0.25rem; }
   .entry-desc { font-size: 13px; color: var(--muted); margin-bottom: 1rem; }
-
-  .breakdown-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid var(--border);
-    font-size: 14px;
-  }
+  .breakdown-row { display: flex; justify-content: space-between; align-items: center; padding: 0.55rem 0; border-bottom: 1px solid var(--border); font-size: 14px; }
   .breakdown-row:last-child { border-bottom: none; }
   .breakdown-label { color: var(--muted); }
   .breakdown-val { font-weight: 500; }
-
   .pay-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
-
-  .pay-card {
-    border-radius: 14px;
-    padding: 1.25rem;
-    border: 1px solid transparent;
-  }
+  .pay-card { border-radius: 14px; padding: 1.25rem; border: 1px solid transparent; }
   .pay-emerald { background: var(--emerald-light); border-color: var(--emerald-border); }
   .pay-rose { background: var(--rose-light); border-color: var(--rose-border); }
-
-  .pay-title { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+  .pay-title { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.5rem; }
   .pay-emerald .pay-title { color: var(--emerald-dark); }
   .pay-rose .pay-title { color: var(--rose-dark); }
-
-  .pay-amount { font-size: 28px; font-weight: 600; }
+  .pay-amount { font-size: 26px; font-weight: 600; }
   .pay-emerald .pay-amount { color: var(--emerald-dark); }
   .pay-rose .pay-amount { color: var(--rose-dark); }
-
   .pay-sub { font-size: 12px; margin-top: 0.25rem; }
   .pay-emerald .pay-sub { color: var(--emerald); }
-  .pay-rose .pay-sub { color: var(--rose); }
-
-  .savings-band {
-    background: #ecfdf5;
-    border: 1px solid var(--emerald-border);
-    border-radius: 12px;
-    padding: 0.875rem 1.25rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+  .pay-rose .pay-sub { color: var(--rose-dark); }
+  .savings-band { background: #ecfdf5; border: 1px solid var(--emerald-border); border-radius: 12px; padding: 0.875rem 1.25rem; display: flex; justify-content: space-between; align-items: center; }
   .savings-label { font-size: 14px; color: var(--emerald-dark); font-weight: 500; }
   .savings-val { font-size: 20px; font-weight: 600; color: var(--emerald-dark); }
-
-  .benefit-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.6rem 0;
-    border-bottom: 1px solid var(--border);
-    font-size: 14px;
-  }
+  .benefit-row { display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 14px; }
   .benefit-row:last-child { border-bottom: none; }
   .benefit-label { color: var(--muted); }
   .benefit-value { font-weight: 500; }
-  .benefit-positive { color: var(--emerald); font-size: 18px; font-weight: 600; }
-
-  .total-highlight {
-    background: #f0fdf4;
-    border: 1px solid var(--emerald-border);
-    border-radius: 12px;
-    padding: 0.875rem 1.25rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 0.75rem;
-  }
+  .total-highlight { background: #f0fdf4; border: 1px solid var(--emerald-border); border-radius: 12px; padding: 0.875rem 1.25rem; display: flex; justify-content: space-between; align-items: center; margin-top: 0.75rem; }
   .total-highlight .benefit-label { color: var(--text); font-weight: 500; }
-
-  .info-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid var(--border);
-    font-size: 14px;
-  }
+  .benefit-positive { color: var(--emerald); font-size: 18px; font-weight: 600; }
+  .info-row { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; border-bottom: 1px solid var(--border); font-size: 14px; }
   .info-row:last-child { border-bottom: none; }
   .info-name { font-weight: 500; }
-  .info-desc { color: var(--muted); text-align: right; font-size: 13px; }
-
-  .share-btn {
-    width: 100%;
-    padding: 15px;
-    border-radius: 14px;
-    background: var(--text);
-    color: white;
-    border: none;
-    font-size: 15px;
-    font-weight: 600;
-    font-family: 'Inter', sans-serif;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 1rem;
-    transition: opacity 0.2s;
-  }
+  .info-desc { color: var(--muted); font-size: 13px; text-align: right; }
+  .share-btn { width: 100%; padding: 15px; border-radius: 14px; background: var(--text); color: white; border: none; font-size: 15px; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 1rem; transition: opacity 0.2s; }
   .share-btn:hover { opacity: 0.88; }
-  .share-btn:active { opacity: 0.75; transform: scale(0.99); }
-
-  .toast {
-    text-align: center;
-    font-size: 13px;
-    color: var(--emerald);
-    margin-top: 0.5rem;
-    height: 20px;
-    transition: opacity 0.3s;
-  }
-
+  .toast { text-align: center; font-size: 13px; color: var(--emerald); margin-top: 0.5rem; height: 20px; }
   @media (max-width: 500px) {
-    .row { grid-template-columns: 1fr; }
+    .grid-2 { grid-template-columns: 1fr; }
     .pay-grid { grid-template-columns: 1fr; }
-    .entry-big { font-size: 28px; }
+    .entry-big { font-size: 26px; }
     .pay-amount { font-size: 22px; }
-    .header h1 { font-size: 22px; }
   }
 </style>
 </head>
@@ -238,22 +95,28 @@
 
   <div class="card">
     <div class="section-title">Параметры сделки</div>
-    <div class="input-group">
-      <div class="input-label">Стоимость объекта <span class="input-val" id="price-out">5 000 000 ₽</span></div>
-      <input type="range" id="price" min="1500000" max="50000000" step="100000" value="5000000">
-    </div>
-    <div class="input-group">
-      <div class="input-label">Первоначальный взнос <span class="input-val" id="dp-out">30%</span></div>
-      <input type="range" id="dp" min="10" max="90" step="1" value="30">
-    </div>
-    <div class="row">
-      <div class="input-group" style="margin-bottom:0">
-        <div class="input-label">Срок займа (лет)</div>
-        <input type="number" class="num-input" id="term" value="15" min="1" max="30">
+    <div class="grid-2" style="margin-bottom:1rem">
+      <div class="input-group">
+        <label class="input-label">Стоимость объекта, ₽</label>
+        <input type="number" class="num-input" id="price" value="5000000" min="1000000" step="100000" placeholder="5000000">
+        <span class="input-hint">например: 5000000</span>
       </div>
-      <div class="input-group" style="margin-bottom:0">
-        <div class="input-label">Ставка банка (%)</div>
-        <input type="number" class="num-input" id="bank-rate" value="18" min="1" max="40" step="0.1">
+      <div class="input-group">
+        <label class="input-label">Первоначальный взнос, %</label>
+        <input type="number" class="num-input" id="dp" value="30" min="10" max="90" step="1" placeholder="30">
+        <span class="input-hint">от 10 до 90</span>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="input-group">
+        <label class="input-label">Срок займа, лет</label>
+        <input type="number" class="num-input" id="term" value="15" min="1" max="30" step="1" placeholder="15">
+        <span class="input-hint">от 1 до 30</span>
+      </div>
+      <div class="input-group">
+        <label class="input-label">Ставка банка, %</label>
+        <input type="number" class="num-input" id="bank-rate" value="18" min="1" max="40" step="0.1" placeholder="18">
+        <span class="input-hint">текущая ипотечная ставка</span>
       </div>
     </div>
   </div>
@@ -318,57 +181,45 @@
 
 <script>
 function fmt(n) { return Math.round(n).toLocaleString('ru-RU') + ' ₽'; }
-
 function annuity(loan, rateY, years) {
   const r = rateY / 100 / 12;
   const n = years * 12;
   if (r === 0) return loan / n;
   return loan * r * Math.pow(1+r,n) / (Math.pow(1+r,n)-1);
 }
-
 function calc() {
-  const price = +document.getElementById('price').value;
-  const dpPct = +document.getElementById('dp').value;
-  const term  = +document.getElementById('term').value || 15;
+  const price = +document.getElementById('price').value || 0;
+  const dpPct = +document.getElementById('dp').value || 0;
+  const term = +document.getElementById('term').value || 15;
   const bankRate = +document.getElementById('bank-rate').value || 18;
-
+  if (!price || !dpPct) return;
   const dp = Math.round(price * dpPct / 100);
   const loan = price - dp;
   const commission = Math.round(price * 0.13);
-  const entry = 150000;
-  const legal = 23100;
+  const entry = 150000, legal = 23100;
   const entryTotal = dp + commission + entry + legal;
-
-  document.getElementById('price-out').textContent = fmt(price);
-  document.getElementById('dp-out').textContent = dpPct + '%';
   document.getElementById('entry-total').textContent = fmt(entryTotal);
   document.getElementById('e-dp').textContent = fmt(dp);
   document.getElementById('e-comm').textContent = fmt(commission);
-
   const fundMonthly = Math.round(annuity(loan, 10, term) + 1000);
   const bankMonthly = Math.round(annuity(loan, bankRate, term));
-
   document.getElementById('fund-pay').textContent = fmt(fundMonthly);
   document.getElementById('bank-pay').textContent = fmt(bankMonthly);
   document.getElementById('bank-rate-label').textContent = bankRate + '% годовых';
   document.getElementById('monthly-saving').textContent = fmt(Math.max(0, bankMonthly - fundMonthly));
-
   const n = term * 12;
   const totalFund = Math.round(fundMonthly * n + commission + entry + legal);
   const totalBank = Math.round(bankMonthly * n);
   const overpayFund = Math.round(fundMonthly * n - loan + commission + entry + legal);
   const overpayBank = Math.round(bankMonthly * n - loan);
   const totalSaving = totalBank - totalFund;
-
   document.getElementById('total-fund').textContent = fmt(totalFund);
   document.getElementById('total-bank').textContent = fmt(totalBank);
   document.getElementById('overpay-fund').textContent = fmt(overpayFund);
   document.getElementById('overpay-bank').textContent = fmt(overpayBank);
   document.getElementById('total-saving').textContent = (totalSaving > 0 ? '+' : '') + fmt(totalSaving);
-
   window._d = { price, dpPct, dp, loan, term, bankRate, commission, entry, legal, entryTotal, fundMonthly, bankMonthly, totalFund, totalBank, totalSaving };
 }
-
 function share() {
   const d = window._d; if (!d) return;
   const r = n => Math.round(n).toLocaleString('ru-RU');
@@ -379,9 +230,7 @@ function share() {
     setTimeout(() => t.textContent = '', 3000);
   });
 }
-
-['price','dp'].forEach(id => document.getElementById(id).addEventListener('input', calc));
-['term','bank-rate'].forEach(id => document.getElementById(id).addEventListener('input', calc));
+['price','dp','term','bank-rate'].forEach(id => document.getElementById(id).addEventListener('input', calc));
 calc();
 </script>
 </body>
