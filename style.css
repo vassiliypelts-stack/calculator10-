@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Красивые скругления и тени */
+.rounded-card {
+    border-radius: 2.5rem;
+}
+
+/* Профессиональный Кастомный Ползунок */
+.custom-range {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 10px;
+    background: #f1f5f9;
+    border-radius: 999px;
+    outline: none;
+    cursor: pointer;
+}
+
+.custom-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 26px;
+    width: 26px;
+    border-radius: 50%;
+    background: #2563eb;
+    cursor: pointer;
+    border: 4px solid white;
+    box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.4);
+    transition: all 0.2s;
+}
+
+.custom-range:hover::-webkit-slider-thumb {
+    transform: scale(1.1);
+    box-shadow: 0 15px 20px -5px rgba(37, 99, 235, 0.4);
+}
