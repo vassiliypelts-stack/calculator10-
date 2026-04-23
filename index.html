@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Фонд vs Банк Калькулятор</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        input[type=range] { -webkit-appearance: none; background: #e2e8f0; border-radius: 10px; height: 8px; }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 20px; width: 20px; border-radius: 50%; background: #2563eb; cursor: pointer; border: 3px solid white; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 pb-20">
+    <div class="bg-blue-600 text-white py-4 text-center text-sm font-bold shadow-md">СРАВНИТЕ ИПОТЕКУ И АЛЬТЕРНАТИВНОЕ ФИНАНСИРОВАНИЕ</div>
+    
+    <div class="max-w-5xl mx-auto px-4 mt-12">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-black text-slate-900 tracking-tight">Калькулятор выгоды</h1>
+            <p class="text-slate-500 mt-2 font-medium">Сравнение условий Фонда и Банка</p>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <!-- ВВОД -->
+            <div class="lg:col-span-4 bg-white p-8 rounded-[2.5rem] shadow-xl border border-slate-100 flex flex-col gap-10">
+                <div class="space-y-4">
+                    <div class="flex justify-between items-end"><label class="text-xs font-black text-slate-400 uppercase">Цена квартиры</label><span id="priceVal" class="text-xl font-black text-blue-600">10 000 000 ₽</span></div>
+                    <input type="range" id="price" min="1000000" max="40000000" step="100000" value="10000000" class="w-full">
+                </div>
+                <div class="space-y-4">
+                    <div class="flex justify-between items-end"><label class="text-xs font-black text-slate-400 uppercase">Взнос (%)</label><span id="dpVal" class="text-xl font-black text-blue-600">30%</span></div>
+                    <input type="range" id="dp" min="10" max="90" step="5" value="30" class="w-full">
+                </div>
+            </div>
+
+            <!-- ВЫВОД -->
+            <div class="lg:col-span-8 space-y-6">
+                <!-- Вход -->
+                <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100 relative overflow-hidden">
+                    <h2 class="text-lg font-bold mb-6 flex items-center gap-2"><i data-lucide="wallet" class="text-blue-600"></i> Ваш вход в сделку</h2>
+                    <div class="bg-emerald-50 rounded-3xl p-8 border border-emerald-100 flex flex-col md:flex-row justify-between items-center gap-6">
+                        <div><p class="text-xs font-black text-emerald-600 uppercase mb-1">ИТОГО К ОПЛАТЕ СЕЙЧАС</p><p id="totalEntry" class="text-5xl font-black text-emerald-700">0 ₽</p></div>
+                        <p class="text-xs font-bold text-emerald-600 italic text-center md:text-right max-w-[200px]">Вы оформляете квартиру на себя с этой суммой</p>
+                    </div>
+                </div>
+
+                <!-- Платежи -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100">
+                        <p class="text-xs font-black text-slate-400 uppercase mb-4">Платеж Фонд (10%)</p>
+                        <p id="fundM" class="text-3xl font-black text-emerald-600">0 ₽</p>
+                        <div class="mt-4 pt-4 border-t border-slate-50 text-xs font-bold text-emerald-600 flex items-center gap-2">
+                             <i data-lucide="check-circle" size="14"></i> Экономия: <span id="monthlySave">0 ₽</span>
+                        </div>
+                    </div>
+                    <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100/50 opacity-60">
+                        <p class="text-xs font-black text-slate-400 uppercase mb-4">Платеж Банк (20%)</p>
+                        <p id="bankM" class="text-3xl font-black text-rose-500">0 ₽</p>
+                    </div>
+                </div>
+
+                <button onclick="copyResults()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-black py-6 rounded-[2rem] shadow-2xl shadow-blue-400/30 transition-all uppercase tracking-widest text-lg flex items-center justify-center gap-3">
+                    <i data-lucide="share-2"></i> Отправить расчет клиенту
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+        const pI = document.getElementById('price'); const dI = document.getElementById('dp');
+        function upd() {
+            const P = +pI.value; const DPP = +dI.value; const DP = P * DPP / 100; const L = P - DP;
+            const ann = (L, R) => { const i = R/1200; return L * (i * Math.pow(1+i, 300)) / (Math.pow(1+i, 300) - 1); };
+            const FM = ann(L, 10) + 1000; const BM = ann(L, 20);
+            const ENT = DP + (P * 0.13) + 150000 + 23100;
+            document.getElementById('priceVal').innerText = P.toLocaleString() + ' ₽';
+            document.getElementById('dpVal').innerText = DPP + '%';
+            document.getElementById('totalEntry').innerText = Math.round(ENT).toLocaleString() + ' ₽';
+            document.getElementById('fundM').innerText = Math.round(FM).toLocaleString() + ' ₽';
+            document.getElementById('bankM').innerText = Math.round(BM).toLocaleString() + ' ₽';
+            document.getElementById('monthlySave').innerText = Math.round(BM - FM).toLocaleString() + ' ₽';
+        }
+        pI.oninput = upd; dI.oninput = upd; upd();
+        function copyResults() {
+            const text = `Резюме по квартире: ${document.getElementById('priceVal').innerText}\nСумма входа: ${document.getElementById('totalEntry').innerText}\nПлатеж: ${document.getElementById('fundM').innerText}\nЭкономия в месяц: ${document.getElementById('monthlySave').innerText}`;
+            navigator.clipboard.writeText(text); alert('Расчет скопирован!');
+        }
+    </script>
+</body>
+</html>

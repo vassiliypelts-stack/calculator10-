@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Финансовый калькулятор</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-slate-50 font-sans text-slate-900 pb-20">
+    <div class="bg-blue-600 text-white py-3 text-center text-sm font-bold tracking-wide">
+        СРАВНИТЕ ИПОТЕКУ И АЛЬТЕРНАТИВНОЕ ФИНАНСИРОВАНИЕ
+    </div>
+
+    <div class="max-w-6xl mx-auto px-4 mt-8">
+        <header class="mb-10 flex flex-col items-center text-center">
+            <h1 class="text-3xl font-black text-slate-900 leading-tight">
+                Калькулятор выбора <br> выгодного займа
+            </h1>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <!-- Ввод данных -->
+            <div class="lg:col-span-4 bg-white rounded-[2.5rem] p-8 shadow-xl border border-slate-100 flex flex-col gap-8">
+                <h2 class="text-xl font-bold">Ваши данные</h2>
+                
+                <div class="space-y-8">
+                    <div>
+                        <label>Цена квартиры: <span id="priceLabel" class="font-black text-blue-600"></span></label>
+                        <input type="range" id="price" min="1000000" max="50000000" step="100000" value="10000000" class="w-full h-2 bg-slate-100 accent-blue-600">
+                    </div>
+                    <div>
+                        <label>Первоначальный взнос (%): <span id="dpPercentLabel" class="font-black text-blue-600"></span></label>
+                        <input type="range" id="dpPercent" min="10" max="90" step="5" value="30" class="w-full h-2 bg-slate-100 accent-blue-600">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Результаты -->
+            <div class="lg:col-span-8 flex flex-col gap-6">
+                <!-- Блок входа -->
+                <div class="bg-white rounded-[2.5rem] p-8 shadow-sm border border-slate-100">
+                    <h2 class="text-xl font-bold mb-4">Ваш вход в сделку</h2>
+                    <div class="bg-emerald-50 rounded-3xl p-6 border border-emerald-100">
+                        <p class="text-xs font-bold text-emerald-600">ИТОГО ВХОД</p>
+                        <p id="totalEntry" class="text-4xl font-black text-emerald-700">0 ₽</p>
+                    </div>
+                </div>
+
+                <!-- Сравнение -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white rounded-[2.5rem] p-8 shadow-sm border border-slate-100">
+                        <h3 class="font-bold text-slate-400">Платеж Фонд (10%)</h3>
+                        <p id="fundMonthly" class="text-2xl font-black text-emerald-600">0 ₽</p>
+                    </div>
+                    <div class="bg-white rounded-[2.5rem] p-8 shadow-sm border border-slate-100">
+                        <h3 class="font-bold text-slate-400">Платеж Банк (20%)</h3>
+                        <p id="bankMonthly" class="text-2xl font-black text-rose-600">0 ₽</p>
+                    </div>
+                </div>
+
+                <button id="shareButton" class="w-full bg-blue-600 text-white font-black py-4 rounded-3xl shadow-xl">
+                    Скопировать расчет для клиента
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
