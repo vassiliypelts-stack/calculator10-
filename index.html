@@ -1,24 +1,4 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Калькулятор недвижимости — Кооператив vs Банк</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --emerald-light: #d1fae5;
-    --emerald-border: #6ee7b7;
-    --emerald-dark: #065f46;
-    --emerald: #059669;
-    --rose-light: #ffe4e6;
-    --rose-border: #fda4af;
-    --rose-dark: #9f1239;
-    --bg: #f8fafc;
-    --surface: #ffffff;
-    --border: #e2e8f0;
+
     --text: #0f172a;
     --muted: #64748b;
     --radius: 20px;
@@ -90,7 +70,7 @@
 <div class="container">
   <div class="header">
     <h1>Калькулятор недвижимости</h1>
-    <p>Кооператив (Фонд) vs Банковская ипотека — сравните реальную выгоду</p>
+    <p>Доступное жильё 10% vs Банковская ипотека — сравните реальную выгоду</p>
   </div>
 
   <div class="card">
@@ -135,7 +115,7 @@
     <div class="section-title">Сравнение ежемесячных платежей</div>
     <div class="pay-grid">
       <div class="pay-card pay-emerald">
-        <div class="pay-title">Кооператив (Фонд)</div>
+        <div class="pay-title">Доступное жильё 10%</div>
         <div class="pay-amount" id="fund-pay">—</div>
         <div class="pay-sub">10% годовых + 1 000 ₽/мес</div>
       </div>
@@ -153,9 +133,9 @@
 
   <div class="card">
     <div class="section-title">Итоговая выгода за весь срок</div>
-    <div class="benefit-row"><span class="benefit-label">Всего выплат (Фонд)</span><span class="benefit-value" id="total-fund">—</span></div>
+    <div class="benefit-row"><span class="benefit-label">Всего выплат (Доступное жильё)</span><span class="benefit-value" id="total-fund">—</span></div>
     <div class="benefit-row"><span class="benefit-label">Всего выплат (Банк)</span><span class="benefit-value" id="total-bank">—</span></div>
-    <div class="benefit-row"><span class="benefit-label">Переплата Фонд</span><span class="benefit-value" id="overpay-fund">—</span></div>
+    <div class="benefit-row"><span class="benefit-label">Переплата Доступное жильё</span><span class="benefit-value" id="overpay-fund">—</span></div>
     <div class="benefit-row"><span class="benefit-label">Переплата Банк</span><span class="benefit-value" id="overpay-bank">—</span></div>
     <div class="total-highlight">
       <span class="benefit-label">Экономия за весь срок</span>
@@ -169,7 +149,7 @@
     <div class="info-row"><span class="info-name">Вступительный взнос</span><span class="info-desc">150 000 ₽, разово</span></div>
     <div class="info-row"><span class="info-name">Юридические сборы</span><span class="info-desc">23 100 ₽, разово</span></div>
     <div class="info-row"><span class="info-name">Членский взнос</span><span class="info-desc">12 000 ₽/год → 1 000 ₽/мес к платежу</span></div>
-    <div class="info-row"><span class="info-name">Ставка Фонда</span><span class="info-desc">10% годовых (аннуитет)</span></div>
+    <div class="info-row"><span class="info-name">Ставка программы</span><span class="info-desc">10% годовых (аннуитет)</span></div>
   </div>
 
   <button class="share-btn" onclick="share()">
@@ -223,7 +203,7 @@ function calc() {
 function share() {
   const d = window._d; if (!d) return;
   const r = n => Math.round(n).toLocaleString('ru-RU');
-  const text = `🏠 Расчёт покупки недвижимости\n\nЦена: ${r(d.price)} ₽\nПВ (${d.dpPct}%): ${r(d.dp)} ₽\nСрок: ${d.term} лет\n\n💼 Вход в сделку: ${r(d.entryTotal)} ₽\n\n📊 Ежемесячно:\nКооператив: ${r(d.fundMonthly)} ₽\nБанк (${d.bankRate}%): ${r(d.bankMonthly)} ₽\nЭкономия: ${r(d.bankMonthly - d.fundMonthly)} ₽/мес\n\n💰 За весь срок:\nФонд: ${r(d.totalFund)} ₽\nБанк: ${r(d.totalBank)} ₽\nВыгода: ${r(d.totalSaving)} ₽`;
+  const text = `🏠 Расчёт покупки недвижимости\n\nЦена: ${r(d.price)} ₽\nПВ (${d.dpPct}%): ${r(d.dp)} ₽\nСрок: ${d.term} лет\n\n💼 Вход в сделку: ${r(d.entryTotal)} ₽\n\n📊 Ежемесячно:\nКооператив: ${r(d.fundMonthly)} ₽\nБанк (${d.bankRate}%): ${r(d.bankMonthly)} ₽\nЭкономия: ${r(d.bankMonthly - d.fundMonthly)} ₽/мес\n\n💰 За весь срок:\nДоступное жильё: ${r(d.totalFund)} ₽\nБанк: ${r(d.totalBank)} ₽\nВыгода: ${r(d.totalSaving)} ₽`;
   navigator.clipboard.writeText(text).then(() => {
     const t = document.getElementById('toast');
     t.textContent = 'Скопировано в буфер обмена';
