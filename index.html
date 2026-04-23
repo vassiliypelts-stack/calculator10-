@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Калькулятор недвижимости — Кооператив vs Банк</title>
+<title>Калькулятор недвижимости — Ипотека 10% vs Банк 20%+ </title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -90,7 +90,7 @@
 <div class="container">
   <div class="header">
     <h1>Калькулятор недвижимости</h1>
-    <p>Кооператив (Фонд) vs Банковская ипотека — сравните реальную выгоду</p>
+    <p>Ипотека 10% vs Банковская ипотека 20%+ — сравните реальную выгоду</p>
   </div>
 
   <div class="card">
@@ -135,7 +135,7 @@
     <div class="section-title">Сравнение ежемесячных платежей</div>
     <div class="pay-grid">
       <div class="pay-card pay-emerald">
-        <div class="pay-title">Кооператив (Фонд)</div>
+        <div class="pay-title">Ипотека 10%</div>
         <div class="pay-amount" id="fund-pay">—</div>
         <div class="pay-sub">10% годовых + 1 000 ₽/мес</div>
       </div>
@@ -223,7 +223,7 @@ function calc() {
 function share() {
   const d = window._d; if (!d) return;
   const r = n => Math.round(n).toLocaleString('ru-RU');
-  const text = `🏠 Расчёт покупки недвижимости\n\nЦена: ${r(d.price)} ₽\nПВ (${d.dpPct}%): ${r(d.dp)} ₽\nСрок: ${d.term} лет\n\n💼 Вход в сделку: ${r(d.entryTotal)} ₽\n\n📊 Ежемесячно:\nКооператив: ${r(d.fundMonthly)} ₽\nБанк (${d.bankRate}%): ${r(d.bankMonthly)} ₽\nЭкономия: ${r(d.bankMonthly - d.fundMonthly)} ₽/мес\n\n💰 За весь срок:\nФонд: ${r(d.totalFund)} ₽\nБанк: ${r(d.totalBank)} ₽\nВыгода: ${r(d.totalSaving)} ₽`;
+  const text = `🏠 Расчёт покупки недвижимости\n\nЦена: ${r(d.price)} ₽\nПВ (${d.dpPct}%): ${r(d.dp)} ₽\nСрок: ${d.term} лет\n\n💼 Вход в сделку: ${r(d.entryTotal)} ₽\n\n📊 Ежемесячно:\nИпотека10%: ${r(d.fundMonthly)} ₽\nБанк (${d.bankRate}%): ${r(d.bankMonthly)} ₽\nЭкономия: ${r(d.bankMonthly - d.fundMonthly)} ₽/мес\n\n💰 За весь срок:\nФонд: ${r(d.totalFund)} ₽\nБанк: ${r(d.totalBank)} ₽\nВыгода: ${r(d.totalSaving)} ₽`;
   navigator.clipboard.writeText(text).then(() => {
     const t = document.getElementById('toast');
     t.textContent = 'Скопировано в буфер обмена';
