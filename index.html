@@ -3,66 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Фонд vs Банк Калькулятор</title>
+    <title>Финансовый калькулятор | Выгода 10%</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-        body { font-family: 'Inter', sans-serif; }
-        input[type=range] { -webkit-appearance: none; background: #e2e8f0; border-radius: 10px; height: 8px; }
-        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 20px; width: 20px; border-radius: 50%; background: #2563eb; cursor: pointer; border: 3px solid white; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+        body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+        input[type=range] { -webkit-appearance: none; background: #f1f5f9; border-radius: 99px; height: 10px; cursor: pointer; }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 24px; width: 24px; border-radius: 50%; background: #2563eb; cursor: pointer; border: 4px solid white; box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.4); transition: all 0.2s; }
+        input[type=range]:active::-webkit-slider-thumb { transform: scale(1.1); box-shadow: 0 20px 25px -5px rgba(37, 99, 235, 0.4); }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-900 pb-20">
-    <div class="bg-blue-600 text-white py-4 text-center text-sm font-bold shadow-md">СРАВНИТЕ ИПОТЕКУ И АЛЬТЕРНАТИВНОЕ ФИНАНСИРОВАНИЕ</div>
-    
-    <div class="max-w-5xl mx-auto px-4 mt-12">
-        <header class="text-center mb-12">
-            <h1 class="text-4xl font-black text-slate-900 tracking-tight">Калькулятор выгоды</h1>
-            <p class="text-slate-500 mt-2 font-medium">Сравнение условий Фонда и Банка</p>
+<body class="bg-[#f8fafc] text-slate-900 pb-24">
+    <!-- Шапка -->
+    <div class="bg-blue-600 text-white py-3 text-center text-[10px] font-black uppercase tracking-[0.2em]">
+        Сравните ипотеку и альтернативное финансирование
+    </div>
+
+    <div class="max-w-6xl mx-auto px-6 mt-12">
+        <header class="text-center mb-16 space-y-2">
+            <h1 class="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter leading-tight">
+                Калькулятор выбора <br> <span class="text-blue-600">выгодного займа</span>
+            </h1>
         </header>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            <!-- ВВОД -->
-            <div class="lg:col-span-4 bg-white p-8 rounded-[2.5rem] shadow-xl border border-slate-100 flex flex-col gap-10">
-                <div class="space-y-4">
-                    <div class="flex justify-between items-end"><label class="text-xs font-black text-slate-400 uppercase">Цена квартиры</label><span id="priceVal" class="text-xl font-black text-blue-600">10 000 000 ₽</span></div>
-                    <input type="range" id="price" min="1000000" max="40000000" step="100000" value="10000000" class="w-full">
-                </div>
-                <div class="space-y-4">
-                    <div class="flex justify-between items-end"><label class="text-xs font-black text-slate-400 uppercase">Взнос (%)</label><span id="dpVal" class="text-xl font-black text-blue-600">30%</span></div>
-                    <input type="range" id="dp" min="10" max="90" step="5" value="30" class="w-full">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+            <!-- ПАНЕЛЬ ВВОДА -->
+            <div class="lg:col-span-4 bg-white rounded-[3rem] p-10 shadow-2xl shadow-blue-900/5 border border-slate-100 space-y-10">
+                <h2 class="text-xl font-extrabold flex items-center gap-3">
+                    <span class="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm shadow-lg shadow-blue-200">1</span>
+                    Ваши данные
+                </h2>
+                
+                <div class="space-y-10">
+                    <div class="space-y-5">
+                        <div class="flex justify-between items-end">
+                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Цена квартиры</label>
+                            <span id="priceVal" class="text-2xl font-black text-blue-600">0 ₽</span>
+                        </div>
+                        <input type="range" id="price" min="1000000" max="40000000" step="100000" value="10000000" class="w-full">
+                    </div>
+
+                    <div class="space-y-5">
+                        <div class="flex justify-between items-end">
+                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Взнос (%)</label>
+                            <span id="dpVal" class="text-2xl font-black text-blue-600">30%</span>
+                        </div>
+                        <p id="dpRub" class="text-xs font-bold text-slate-400">0 ₽</p>
+                        <input type="range" id="dp" min="10" max="90" step="5" value="30" class="w-full">
+                    </div>
                 </div>
             </div>
 
-            <!-- ВЫВОД -->
-            <div class="lg:col-span-8 space-y-6">
-                <!-- Вход -->
-                <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100 relative overflow-hidden">
-                    <h2 class="text-lg font-bold mb-6 flex items-center gap-2"><i data-lucide="wallet" class="text-blue-600"></i> Ваш вход в сделку</h2>
-                    <div class="bg-emerald-50 rounded-3xl p-8 border border-emerald-100 flex flex-col md:flex-row justify-between items-center gap-6">
-                        <div><p class="text-xs font-black text-emerald-600 uppercase mb-1">ИТОГО К ОПЛАТЕ СЕЙЧАС</p><p id="totalEntry" class="text-5xl font-black text-emerald-700">0 ₽</p></div>
-                        <p class="text-xs font-bold text-emerald-600 italic text-center md:text-right max-w-[200px]">Вы оформляете квартиру на себя с этой суммой</p>
+            <!-- ПАНЕЛЬ РЕЗУЛЬТАТОВ -->
+            <div class="lg:col-span-8 flex flex-col gap-8">
+                
+                <!-- КАРТОЧКА ВХОДА -->
+                <div class="bg-white rounded-[3rem] p-10 shadow-sm border border-slate-100 relative overflow-hidden group">
+                    <div class="absolute -top-10 -right-10 opacity-[0.03] group-hover:rotate-12 transition-transform duration-700">
+                        <i data-lucide="home" size="200"></i>
+                    </div>
+                    <h2 class="text-xl font-extrabold flex items-center gap-3 mb-8">
+                        <span class="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-sm">2</span>
+                        Ваш вход в сделку
+                    </h2>
+                    
+                    <div class="bg-emerald-50 rounded-[2rem] p-10 border border-emerald-100 flex flex-col md:flex-row justify-between items-center gap-8 relative z-10">
+                        <div class="text-center md:text-left">
+                            <p class="text-[10px] font-black text-emerald-600 uppercase tracking-widest mb-2">Итого к оплате сейчас</p>
+                            <p id="totalEntry" class="text-5xl md:text-6xl font-black text-emerald-700 tracking-tighter">0 ₽</p>
+                        </div>
+                        <p class="text-sm font-semibold text-emerald-600/80 max-w-[220px] text-center md:text-right italic leading-relaxed">
+                            “Вы заходите в сделку с этой суммой и оформляете квартиру на себя”
+                        </p>
                     </div>
                 </div>
 
-                <!-- Платежи -->
+                <!-- СРАВНЕНИЕ ПЛАТЕЖЕЙ -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100">
-                        <p class="text-xs font-black text-slate-400 uppercase mb-4">Платеж Фонд (10%)</p>
-                        <p id="fundM" class="text-3xl font-black text-emerald-600">0 ₽</p>
-                        <div class="mt-4 pt-4 border-t border-slate-50 text-xs font-bold text-emerald-600 flex items-center gap-2">
-                             <i data-lucide="check-circle" size="14"></i> Экономия: <span id="monthlySave">0 ₽</span>
+                    <div class="bg-white rounded-[3rem] p-8 shadow-sm border border-slate-100 relative">
+                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-6">Платеж Фонд (10% + взнос)</p>
+                        <p id="fundM" class="text-4xl font-black text-emerald-600 tracking-tight">0 ₽</p>
+                        <div class="mt-8 pt-8 border-t border-slate-50">
+                            <div class="inline-flex items-center gap-2 bg-emerald-50 text-emerald-700 px-4 py-2 rounded-xl text-xs font-black">
+                                <i data-lucide="trending-down" size="14"></i>
+                                Экономия в месяц: <span id="monthlySave">0 ₽</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100/50 opacity-60">
-                        <p class="text-xs font-black text-slate-400 uppercase mb-4">Платеж Банк (20%)</p>
-                        <p id="bankM" class="text-3xl font-black text-rose-500">0 ₽</p>
+
+                    <div class="bg-white rounded-[3rem] p-8 shadow-sm border border-slate-100/50 opacity-40 grayscale group hover:grayscale-0 hover:opacity-100 transition-all duration-500">
+                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-6">Платеж Ипотека (20%)</p>
+                        <p id="bankM" class="text-4xl font-black text-rose-500 tracking-tight">0 ₽</p>
+                        <div class="mt-8 pt-8 border-t border-slate-50 italic text-[10px] font-bold text-slate-400 uppercase">Почти в 2 раза дороже</div>
                     </div>
                 </div>
 
-                <button onclick="copyResults()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-black py-6 rounded-[2rem] shadow-2xl shadow-blue-400/30 transition-all uppercase tracking-widest text-lg flex items-center justify-center gap-3">
-                    <i data-lucide="share-2"></i> Отправить расчет клиенту
+                <!-- КНОПКА ОТПРАВКИ -->
+                <button id="mainBtn" onclick="copyResults()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-black py-8 rounded-[2.5rem] shadow-2xl shadow-blue-500/40 transition-all active:scale-[0.98] flex items-center justify-center gap-4 text-xl uppercase tracking-widest">
+                    <span>Отправить расчет клиенту</span>
+                    <i data-lucide="arrow-right-circle" size="28"></i>
                 </button>
             </div>
         </div>
@@ -70,23 +110,52 @@
 
     <script>
         lucide.createIcons();
-        const pI = document.getElementById('price'); const dI = document.getElementById('dp');
-        function upd() {
-            const P = +pI.value; const DPP = +dI.value; const DP = P * DPP / 100; const L = P - DP;
-            const ann = (L, R) => { const i = R/1200; return L * (i * Math.pow(1+i, 300)) / (Math.pow(1+i, 300) - 1); };
-            const FM = ann(L, 10) + 1000; const BM = ann(L, 20);
-            const ENT = DP + (P * 0.13) + 150000 + 23100;
+        const pInput = document.getElementById('price');
+        const dInput = document.getElementById('dp');
+        
+        function update() {
+            const P = parseInt(pInput.value);
+            const DPP = parseInt(dInput.value);
+            const DP = (P * DPP) / 100;
+            const L = P - DP;
+            
+            // Формула аннуитета
+            const ann = (loan, rate) => {
+                const i = (rate / 12) / 100;
+                const n = 25 * 12;
+                return loan * (i * Math.pow(1+i, n)) / (Math.pow(1+i, n) - 1);
+            }
+
+            const fundM = ann(L, 10) + 1000; // 10% + 12k/год
+            const bankM = ann(L, 20); // Банк 20%
+            const entry = DP + (P * 0.13) + 150000 + 23100;
+
+            // Обновляем текст
             document.getElementById('priceVal').innerText = P.toLocaleString() + ' ₽';
             document.getElementById('dpVal').innerText = DPP + '%';
-            document.getElementById('totalEntry').innerText = Math.round(ENT).toLocaleString() + ' ₽';
-            document.getElementById('fundM').innerText = Math.round(FM).toLocaleString() + ' ₽';
-            document.getElementById('bankM').innerText = Math.round(BM).toLocaleString() + ' ₽';
-            document.getElementById('monthlySave').innerText = Math.round(BM - FM).toLocaleString() + ' ₽';
+            document.getElementById('dpRub').innerText = DP.toLocaleString() + ' ₽';
+            document.getElementById('totalEntry').innerText = Math.round(entry).toLocaleString() + ' ₽';
+            document.getElementById('fundM').innerText = Math.round(fundM).toLocaleString() + ' ₽';
+            document.getElementById('bankM').innerText = Math.round(bankM).toLocaleString() + ' ₽';
+            document.getElementById('monthlySave').innerText = Math.round(bankM - fundM).toLocaleString() + ' ₽';
         }
-        pI.oninput = upd; dI.oninput = upd; upd();
+
+        pInput.addEventListener('input', update);
+        dInput.addEventListener('input', update);
+        update();
+
         function copyResults() {
-            const text = `Резюме по квартире: ${document.getElementById('priceVal').innerText}\nСумма входа: ${document.getElementById('totalEntry').innerText}\nПлатеж: ${document.getElementById('fundM').innerText}\nЭкономия в месяц: ${document.getElementById('monthlySave').innerText}`;
-            navigator.clipboard.writeText(text); alert('Расчет скопирован!');
+            const txt = `🏠 РАСЧЕТ ПО КВАРТИРЕ\n\n📌 Цена: ${document.getElementById('priceVal').innerText}\n💸 Вход в сделку: ${document.getElementById('totalEntry').innerText}\n✅ Платеж Фонда: ${document.getElementById('fundM').innerText}\n❌ Платеж Банка: ${document.getElementById('bankM').innerText}\n💎 Выгода: ${document.getElementById('monthlySave').innerText}/мес`;
+            navigator.clipboard.writeText(txt);
+            const btn = document.getElementById('mainBtn');
+            const original = btn.innerHTML;
+            btn.innerHTML = 'РАСЧЕТ СКОПИРОВАН! ✅';
+            btn.classList.replace('bg-blue-600', 'bg-emerald-600');
+            setTimeout(() => {
+                btn.innerHTML = original;
+                btn.classList.replace('bg-emerald-600', 'bg-blue-600');
+                lucide.createIcons();
+            }, 2000);
         }
     </script>
 </body>
